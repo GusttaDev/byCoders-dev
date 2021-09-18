@@ -1,3 +1,19 @@
+# Passos necessários para rodar o projeto
+
+== **Testando localmente:**
+
+1. Execute o comando mvn clean install, raiz do projeto onde está localizado o arquivo pom.xml
+2. Para rodar o projeto basta executar a class Run do projeto : BycodersApplication
+3. Abrir o browser digitar a URL: http://localhost:8080/ para realizar upload do arquivo CNBA.txt
+
+== **Pré-requisitos do projeto**
+
+        -Java 8 ou superior
+        -Docker (última versão), deve ser executado o docker-compose para subir a instância do Postgres
+        -Maven 3.5.* ou superior
+        -Configurar o projeto para utilizar os fontes no encode UTF-8
+
+
 # Desafio programação - para vaga desenvolvedor
 
 Por favor leiam este documento do começo ao fim, com muita atenção.

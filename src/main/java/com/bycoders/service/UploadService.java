@@ -44,7 +44,7 @@ public class UploadService {
 
     }
 
-    private TransactionDocument parserToObject(String line) {
+    public TransactionDocument parserToObject(String line) {
 
         TransactionDocument transactionDocument = new TransactionDocument();
 
@@ -67,14 +67,14 @@ public class UploadService {
         return transactionDocument;
     }
 
-    private Double adjustValue(Double value, String arithmeticOperator) {
+    public Double adjustValue(Double value, String arithmeticOperator) {
         if ("-".equalsIgnoreCase(arithmeticOperator)) {
             return value * MINUS_ONE;
         }
         return value;
     }
 
-    private void save(TransactionDocument transactionDocument) {
+    public void save(TransactionDocument transactionDocument) {
         uploadRepository.save(transactionDocument);
     }
 }
