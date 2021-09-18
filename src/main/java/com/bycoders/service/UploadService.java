@@ -2,7 +2,9 @@ package com.bycoders.service;
 
 import com.bycoders.enums.TransactionType;
 import com.bycoders.model.TransactionDocument;
+import com.bycoders.repository.UploadRepository;
 import com.bycoders.utils.Util;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,12 +17,17 @@ import java.io.IOException;
 public class UploadService {
 
     public static final double ONE_HUNDRED = 100.00;
+    public static final String CONTEXT_TYPE = "text/plain";
+
+    @Autowired
+    private UploadRepository uploadRepository;
 
     public void readFile(MultipartFile file) {
 
         File currDir = new File(".");
         String path = currDir.getAbsolutePath();
         var fileLocation = path.substring(0, path.length() - 1) + file.getOriginalFilename();
+
 
         try (BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {
 
@@ -47,13 +54,13 @@ public class UploadService {
         transactionDocument.setCpf(line.substring(19, 30));
         transactionDocument.setCard(line.substring(30, 42));
         transactionDocument.setHour(Util.formatHour(line.substring(42, 48)));
-        transactionDocument.setStoreOwner(line.substring(48, 62));
-        transactionDocument.setStoreName(line.substring(62, 80));
+        transactionDocument.setStoreOwner(line.substring(48, 62).trim());
+        transactionDocument.setStoreName(line.substring(62, 80).trim());
 
         return transactionDocument;
     }
 
     private void save(TransactionDocument transactionDocument){
-
+        uploadRepository.save(transactionDocument);
     }
 }

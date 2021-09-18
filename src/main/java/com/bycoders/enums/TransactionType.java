@@ -23,6 +23,6 @@ public enum TransactionType {
     }
 
     public static TransactionType getTransactionTypeFromValue(int value){
-        return Arrays.stream(TransactionType.values()).filter(f -> f.value == value).findFirst().orElseThrow(() -> new RuntimeException("Invalid Enum"));
+        return Arrays.stream(TransactionType.values()).filter(f -> f.value == value).findFirst().orElseGet(() -> null);
     }
 }

@@ -2,21 +2,52 @@ package com.bycoders.model;
 
 import com.bycoders.enums.TransactionType;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Entity
+@Table(name = "transaction", schema = "public")
 public class TransactionDocument {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Long id;
+
+    @Enumerated(EnumType.STRING)
     private TransactionType type;
+
+    @Column(name = "TRANSACTION_DATE")
     private LocalDate transactionDate;
+
+    @Column(name = "TRANSACTION_VALUE")
     private double transactionValue;
+
+    @Column(name = "CPF")
     private String cpf;
+
+    @Column(name = "CARD")
     private String card;
+
+    @Column(name = "HOUR")
     private LocalTime hour;
+
+    @Column(name = "STORE_OWNER")
     private String storeOwner;
+
+    @Column(name = "STORE_NAME")
     private String storeName;
 
     public TransactionDocument() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public TransactionType getType() {
