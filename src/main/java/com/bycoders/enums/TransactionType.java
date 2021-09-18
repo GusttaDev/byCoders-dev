@@ -25,4 +25,12 @@ public enum TransactionType {
     public static TransactionType getTransactionTypeFromValue(int value){
         return Arrays.stream(TransactionType.values()).filter(f -> f.value == value).findFirst().orElseGet(() -> null);
     }
+
+    public int getValue() {
+        return value;
+    }
+
+    public String getArithmeticOperator() {
+        return arithmeticOperator;
+    }
 }

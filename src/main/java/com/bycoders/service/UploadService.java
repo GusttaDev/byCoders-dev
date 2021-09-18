@@ -17,7 +17,7 @@ import java.io.IOException;
 public class UploadService {
 
     public static final double ONE_HUNDRED = 100.00;
-    public static final String CONTEXT_TYPE = "text/plain";
+    public static final int MINUS_ONE = -1;
 
     @Autowired
     private UploadRepository uploadRepository;
@@ -48,9 +48,16 @@ public class UploadService {
 
         TransactionDocument transactionDocument = new TransactionDocument();
 
-        transactionDocument.setType(TransactionType.getTransactionTypeFromValue(Integer.parseInt(line.substring(0, 1))));
+        TransactionType transactionTypeFromValue = TransactionType.getTransactionTypeFromValue(Integer.parseInt(line.substring(0, 1)));
+        String arithmeticOperator = transactionTypeFromValue.getArithmeticOperator();
+
+        transactionDocument.setType(transactionTypeFromValue);
         transactionDocument.setTransactionDate(Util.stringToLocalDate(line.substring(1, 9)));
-        transactionDocument.setTransactionValue(Double.parseDouble(line.substring(9, 19)) / ONE_HUNDRED);
+
+        var value = Double.parseDouble(line.substring(9, 19)) / ONE_HUNDRED;
+        Double finalValue = adjustValue(value, arithmeticOperator);
+
+        transactionDocument.setTransactionValue(finalValue);
         transactionDocument.setCpf(line.substring(19, 30));
         transactionDocument.setCard(line.substring(30, 42));
         transactionDocument.setHour(Util.formatHour(line.substring(42, 48)));
@@ -60,7 +67,14 @@ public class UploadService {
         return transactionDocument;
     }
 
-    private void save(TransactionDocument transactionDocument){
+    private Double adjustValue(Double value, String arithmeticOperator) {
+        if ("-".equalsIgnoreCase(arithmeticOperator)) {
+            return value * MINUS_ONE;
+        }
+        return value;
+    }
+
+    private void save(TransactionDocument transactionDocument) {
         uploadRepository.save(transactionDocument);
     }
 }
