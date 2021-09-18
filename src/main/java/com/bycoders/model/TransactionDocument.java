@@ -22,7 +22,7 @@ public class TransactionDocument {
     private LocalDate transactionDate;
 
     @Column(name = "TRANSACTION_VALUE")
-    private double transactionValue;
+    private Double transactionValue;
 
     @Column(name = "CPF")
     private String cpf;
@@ -66,11 +66,11 @@ public class TransactionDocument {
         this.transactionDate = transactionDate;
     }
 
-    public double getTransactionValue() {
+    public Double getTransactionValue() {
         return transactionValue;
     }
 
-    public void setTransactionValue(double transactionValue) {
+    public void setTransactionValue(Double transactionValue) {
         this.transactionValue = transactionValue;
     }
 
